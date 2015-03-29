@@ -10,7 +10,7 @@ Menu control tables for Barker Bob's ...
         <patty code="bison" price="9.19">bison burger</patty>
         <patty code="vege" price="6.49">vegetarian burger</patty>
     </patties>
- 
+
     <cheeses>
         <cheese code="american" price=".59">american</cheese>
         <cheese code="swiss" price=".59">swiss</cheese>

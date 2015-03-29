@@ -1,3 +1,3 @@
 <div class="row">
-A burger?
+    <h3>{orderName} for {customerName} ({orderType})</h3>
 </div>
