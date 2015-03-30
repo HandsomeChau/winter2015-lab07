@@ -26,9 +26,29 @@ class Orders extends CI_Model {
 
             $this->customerName = $this->xml->customer;
             $this->orderType = (string) $this->xml['type'];
+
             foreach ( $this->xml->burger as $burger ) {
-                array_push($this->burgers, $burger);
+                $burgerOptions = array();
+                $burgerOptions['toppings'] = array();
+                $burgerOptions['sauces'] = array();
+                $burgerOptions['patty'] = $burger->patty['type'];
+                $burgerOptions['topCheese'] = $burger->cheeses['top'];
+                $burgerOptions['bottomCheese'] = $burger->cheeses['bottom'];
+
+                foreach ( $burger->topping as $topping ) {
+                    array_push( $burgerOptions['toppings'], $topping['type'] );
+                }
+
+                foreach ( $burger->sauce as $sauce ) {
+                    array_push( $burgerOptions['sauces'], $sauce['type'] );
+                }
+
+                array_push( $this->burgers, $burgerOptions );
             }
+
+            echo "<pre>";
+            echo print_r( $this->burgers );
+            echo "</pre>";
         }
     }
 
@@ -40,5 +60,15 @@ class Orders extends CI_Model {
     function getOrderType()
     {
         return $this->orderType;
+    }
+
+    function getBurgers()
+    {
+        return $this->burgers;
+    }
+
+    function getToppings()
+    {
+        return $this->burgers['toppings'];
     }
 }

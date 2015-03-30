@@ -50,6 +50,9 @@ class Welcome extends Application
         $this->data['orderName'] = $orderName;
         $this->data['customerName'] = $order->getCustomerName();
         $this->data['orderType'] = $order->getOrderType();
+        $this->data['burgers'] = $order->getBurgers();
+
+
         $this->data['pagebody'] = 'justone';
         $this->render();
     }
