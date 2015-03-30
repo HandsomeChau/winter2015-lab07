@@ -45,17 +45,44 @@ class Welcome extends Application
         // Build a receipt for the chosen order
         $order = new Orders( $filename );
         $orderName = ucfirst(basename($filename, ".xml"));
+        $customerName = $order->getCustomerName();
+        $orderType = $order->getOrderType();
+        $burgers = $order->getBurgers();
+
+        for ( $i = 0; $i < count( $burgers ); $i++ ) {
+            $burgers[$i]['toppings'] = $this->getToppings( $burgers[$i] );
+        }
+
+        for ( $i = 0; $i < count( $burgers ); $i++ ) {
+            $burgers[$i]['sauces'] = $this->getSauces( $burgers[$i] );
+        }
 
         // Present the list to choose from
         $this->data['orderName'] = $orderName;
-        $this->data['customerName'] = $order->getCustomerName();
-        $this->data['orderType'] = $order->getOrderType();
-        $this->data['burgers'] = $order->getBurgers();
-
+        $this->data['customerName'] = $customerName;
+        $this->data['orderType'] = $orderType;
+        $this->data['burgers'] = $burgers;
 
         $this->data['pagebody'] = 'justone';
         $this->render();
     }
 
+    function getToppings( $burger )
+    {
+        if ( empty( $burger['toppings'] ) ) {
+            return "none";
+        } else {
+            return implode( ", ", $burger['toppings'] );
+        }
+    }
+
+    function getSauces( $burger )
+    {
+        if ( empty( $burger['sauces'] ) ) {
+            return "none";
+        } else {
+            return implode( ", ", $burger['sauces'] );
+        }
+    }
 
 }

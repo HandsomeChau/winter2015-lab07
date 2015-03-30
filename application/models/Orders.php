@@ -32,8 +32,20 @@ class Orders extends CI_Model {
                 $burgerOptions['toppings'] = array();
                 $burgerOptions['sauces'] = array();
                 $burgerOptions['patty'] = $burger->patty['type'];
-                $burgerOptions['topCheese'] = $burger->cheeses['top'];
-                $burgerOptions['bottomCheese'] = $burger->cheeses['bottom'];
+
+                if ( empty( $burger->cheeses['top'] ) ) {
+                    $burgerOptions['topCheese'] = "none";
+                } else {
+                    $burgerOptions['topCheese'] = $burger->cheeses['top'];
+
+                }
+
+                if ( empty( $burger->cheeses['bottom'] ) ) {
+                    $burgerOptions['bottomCheese'] = "none";
+                } else {
+                    $burgerOptions['bottomCheese'] = $burger->cheeses['bottom'];
+
+                }
 
                 foreach ( $burger->topping as $topping ) {
                     array_push( $burgerOptions['toppings'], $topping['type'] );
@@ -67,8 +79,4 @@ class Orders extends CI_Model {
         return $this->burgers;
     }
 
-    function getToppings()
-    {
-        return $this->burgers['toppings'];
-    }
 }
