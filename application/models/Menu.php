@@ -12,6 +12,9 @@ class Menu extends CI_Model
     protected $xml         = NULL;
     protected $patty_names = array();
     protected $patties     = array();
+    protected $cheeses  = array();
+    protected $toppings = array();
+    protected $sauces   = array();
 
     // Constructor
     public function __construct()
@@ -30,7 +33,33 @@ class Menu extends CI_Model
             $record->code = (string)$patty['code'];
             $record->name = (string)$patty;
             $record->price = (float)$patty['price'];
-            $patties[$record->code] = $record;
+            $this->patties[$record->code] = $record;
+        }
+
+        // build a full list of cheeses
+        foreach ( $this->xml->cheeses->cheese as $cheese ) {
+            $record = new stdClass();
+            $record->code = (string)$cheese['code'];
+            $record->price = (float)$cheese['price'];
+            $record->name = (string)$cheese;
+            $this->cheeses[$record->code] = $record;
+        }
+
+        // build a full list of toppings
+        foreach ( $this->xml->toppings->topping as $topping ) {
+            $record = new stdClass();
+            $record->code = (string)$topping['code'];
+            $record->price = (float)$topping['price'];
+            $record->name = (string)$topping;
+            $this->toppings[$record->code] = $record;
+        }
+
+        // build a full list of sauces
+        foreach ( $this->xml->sauces->sauce as $sauce ) {
+            $record = new stdClass();
+            $record->code = (string)$sauce['code'];
+            $record->name = (string)$sauce;
+            $this->sauces[$record->code] = $record;
         }
     }
 
@@ -43,10 +72,29 @@ class Menu extends CI_Model
     // retrieve a patty record, perhaps for pricing
     function getPatty( $code )
     {
-        if ( isset( $this->patties[$code] ) )
+        if ( isset( $this->patties[$code] ) ) {
             return $this->patties[$code];
-        else
+        } else {
             return NULL;
+        }
+    }
+
+    function getCheese( $code )
+    {
+        if ( isset( $this->cheeses[$code] ) ) {
+            return $this->cheeses[$code];
+        } else {
+            return NULL;
+        }
+    }
+
+    function getTopping( $code )
+    {
+        if ( isset( $this->toppings[$code] ) ) {
+            return $this->toppings[$code];
+        } else {
+            return NULL;
+        }
     }
 
 }

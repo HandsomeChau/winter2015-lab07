@@ -7,7 +7,9 @@
         <li><b>Bottom cheese:</b> {bottomCheese}</li>
         <li><b>Toppings:</b> {toppings}</li>
         <li><b>Sauces:</b> {sauces}</li>
+        <li><b>Burger Total:</b> {price}</li>
     </ul>
     <br/>
     {/burgers}
+    <h4>Order TOTAL: {totalPrice}</h4>
 </div>
